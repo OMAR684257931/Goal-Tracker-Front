@@ -1,0 +1,54 @@
+.dashboard {
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+  font-family: sans-serif;
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 0.4rem;
+
+    &.btn-logout {
+      background: #dc3545;
+    }
+  }
+
+  .goal-form,
+  .edit-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+
+  input,
+  select {
+    padding: 0.3rem;
+    min-width: 120px;
+  }
+
+  .goal-item {
+    margin: 0.5rem 0;
+  }
+
+  .goal-item.child {
+    margin-left: 2rem;
+  }
+
+  .checkbox-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}

@@ -1,0 +1,115 @@
+<div class="dashboard">
+  <div class="dashboard-header">
+    <h2>🎯 Goal Tracker</h2>
+    <button class="btn btn-logout" (click)="logout()">Logout</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading goals...</div>
+
+  <section class="create-goal">
+    <h3>Create New Goal</h3>
+    <form (submit)="createGoal(); $event.preventDefault()" class="goal-form">
+      <label>
+        Title:
+        <input [(ngModel)]="newGoal.title" name="title" required />
+      </label>
+
+      <label>
+        Description:
+        <input [(ngModel)]="newGoal.description" name="description" />
+      </label>
+
+      <label>
+        Deadline:
+        <input [(ngModel)]="newGoal.deadline" name="deadline" type="date" required />
+      </label>
+
+      <label>
+        Order:
+        <input [(ngModel)]="newGoal.order" name="order" type="number" />
+      </label>
+
+      <label>
+        Parent Goal:
+        <select [(ngModel)]="newGoal.parentId" name="parentId">
+          <option [ngValue]="undefined">None (root goal)</option>
+          <option *ngFor="let g of goals" [ngValue]="g.id">{{ g.title }}</option>
+        </select>
+      </label>
+
+      <label class="checkbox-inline">
+        <input type="checkbox" [(ngModel)]="newGoal.isPublic" name="isPublic" />
+        Public
+      </label>
+
+      <button type="submit" class="btn btn-primary">➕ Add Goal</button>
+    </form>
+  </section>
+
+  <section class="goals-list" *ngIf="!loading && goals.length">
+    <h3>Your Goals</h3>
+    <ul class="goal-tree">
+      <ng-container *ngFor="let goal of rootGoals">
+        <li>
+          <div class="goal-item">
+            <strong>{{ goal.title }}</strong> - {{ goal.deadline | date }}
+            <span *ngIf="goal.isPublic">🌐</span>
+            <button (click)="startEdit(goal)">✏️ Edit</button>
+            <button (click)="deleteGoal(goal.id)">🗑️ Delete</button>
+          </div>
+
+          <form *ngIf="editingGoalId === goal.id" (submit)="updateGoal(); $event.preventDefault()" class="edit-form">
+            <input [(ngModel)]="editGoal.title" name="editTitle" placeholder="Title" />
+            <input [(ngModel)]="editGoal.description" name="editDescription" placeholder="Description" />
+            <input [(ngModel)]="editGoal.deadline" name="editDeadline" type="date" />
+            <label>
+              Parent:
+              <select [(ngModel)]="editGoal.parentId" name="editParentId">
+                <option [ngValue]="undefined">None</option>
+                <option *ngFor="let g of goals" [ngValue]="g.id">{{ g.title }}</option>
+              </select>
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" [(ngModel)]="editGoal.isPublic" name="editIsPublic" />
+              Public
+            </label>
+            <button type="submit">💾 Save</button>
+            <button type="button" (click)="cancelEdit()">Cancel</button>
+          </form>
+
+          <ul>
+            <li *ngFor="let child of getChildren(goal.id)">
+              <div class="goal-item child">
+                ↳ <strong>{{ child.title }}</strong> - <strong>{{ child.title }}</strong> - {{ child.deadline | date }}
+                <span *ngIf="child.isPublic">🌐</span>
+                <button (click)="startEdit(child)">✏️</button>
+                <button (click)="deleteGoal(child.id)">🗑️</button>
+              </div>
+
+              <form *ngIf="editingGoalId === child.id" (submit)="updateGoal(); $event.preventDefault()" class="edit-form">
+                <input [(ngModel)]="editGoal.title" name="childEditTitle" placeholder="Title" />
+                <input [(ngModel)]="editGoal.description" name="childEditDescription" placeholder="Description" />
+                <input [(ngModel)]="editGoal.deadline" name="childEditDeadline" type="date" />
+                <label>
+                  Parent:
+                  <select [(ngModel)]="editGoal.parentId" name="childEditParentId">
+                    <option [ngValue]="undefined">None</option>
+                    <option *ngFor="let g of goals" [ngValue]="g.id">{{ g.title }}</option>
+                  </select>
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" [(ngModel)]="editGoal.isPublic" name="childEditIsPublic" />
+                  Public
+                </label>
+                <button type="submit">Save</button>
+                <button type="button" (click)="cancelEdit()">Cancel</button>
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </section>
+
+  <p *ngIf="!loading && goals.length === 0">🚫 You have no goals yet. Start by creating one above.</p>
+</div>
