@@ -130,7 +130,7 @@ npm run test
 
 **Omar Eid**
 Senior Full Stack Developer — Laravel | NestJS | Angular | Docker
-🔗 [linkedin.com/in/omar-eid](https://linkedin.com/in/omar-eid)
+🔗 [linkedin.com/in/omar-eid](https://www.linkedin.com/in/omar-eid-669093200/)
 
 ---
 
