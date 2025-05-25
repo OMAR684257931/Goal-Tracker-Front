@@ -1,59 +1,136 @@
-# GoaltrackerFrontend
+# 🎯 GoalTracker Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
+Frontend interface for **GoalTracker**, a Smart Personal & Public Goal Management Tool. Built using **Angular 17 (standalone components)** with a modern UI and API integration.
 
-## Development server
+It connects to the backend [GoalTracker API](https://github.com/yourname/goaltracker-api) powered by **NestJS**.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## 🚀 Stack
+
+| Layer       | Tech                      |
+| ----------- | ------------------------- |
+| Framework   | Angular 17 (standalone)   |
+| Styling     | SCSS                      |
+| HTTP Client | Axios                     |
+| State/Auth  | LocalStorage (JWT)        |
+| UI          | Custom Forms + Tree Views |
+
+---
+
+## 🔥 Features
+
+* 🔐 Login/Register with JWT storage
+* 📂 Dashboard to manage your private goals
+* 🧱 Goal nesting (up to 2 levels)
+* ✏️ Create, update, delete goals
+* 🌍 Public goal sharing support
+* 🎨 Modern form styling and alerts
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── auth/         # Login/Register components
+│   ├── dashboard/    # Goal management UI
+│   ├── shared/       # Services, guards, models
+│   ├── app.routes.ts # Angular standalone routing
+│   └── app.component.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## ▶️ Setup Instructions
 
 ```bash
-ng generate component component-name
+# 1. Clone the repo
+cd goaltracker-frontend
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the app
+npm start
+
+# App runs at:
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Make sure the backend is running on `http://localhost:3000`.
+
+---
+
+## 🌐 Routes
+
+| Route         | Description                 |
+| ------------- | --------------------------- |
+| `/login`      | Login form                  |
+| `/register`   | User registration           |
+| `/dashboard`  | Private goal dashboard      |
+| `/public`     | View all public goals       |
+| `/public/:id` | View a specific public goal |
+
+---
+
+## 🔐 Auth Handling
+
+* Token is stored in `localStorage` under `gt_token`
+* Guards:
+
+  * `authGuard`: restricts private routes
+  * `guestGuard`: prevents access to login/register when logged in
+* Axios interceptor injects JWT into all requests
+
+---
+
+## 📦 Environment
+
+Edit in `src/environments/environment.ts`:
+
+```ts
+export const environment = {
+  apiUrl: 'http://localhost:3000'
+};
+```
+
+---
+
+## 📸 Screenshots (optional)
+
+> You can add images here like:
+>
+> * Login screen
+> * Dashboard with nested goals
+> * Public view UI
+
+---
+
+## 🧪 Unit Testing (optional)
+
+To run tests:
 
 ```bash
-ng generate --help
+npm run test
 ```
 
-## Building
+---
 
-To build the project run:
+## 📌 Notes
 
-```bash
-ng build
-```
+* Drag & drop ordering is handled visually (future improvement)
+* No pagination yet on public goals
+* Uses inline modals and styled alerts for UX clarity
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 👨‍💻 Author
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+**Omar Eid**
+Senior Full Stack Developer — Laravel | NestJS | Angular | Docker
+🔗 [linkedin.com/in/omar-eid](https://linkedin.com/in/omar-eid)
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
